@@ -42,13 +42,13 @@ void GephProcess::establishConnection(const ConnectArgs & options)
 SyncedInfo GephProcess::sync(const SyncArgs & options)
 {
 	setProgram(BinaryPath);
-	setArguments(QStringList() << "--username" << options.username << "--password" << options.password);
+	setArguments(QStringList() << "sync" << "--username" << options.username << "--password" << options.password);
 	setReadChannel(QProcess::StandardOutput);
 
 	start();
 	waitForFinished();
 
-	auto doc = QJsonDocument::fromJson(readAll());
+	auto const doc = QJsonDocument::fromJson(readAll());
 	SyncedInfo info;
 
 	info.plan = doc.array().at(0).toObject().value("subscription").toObject().value("level").toString();
