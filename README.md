@@ -10,3 +10,4 @@ First fill in executable path, username and password, and then click 'Sync.' The
 
 - `QProcess::terminate()` cannot terminate geph process, so now I use `killall`. This can in no way be regarded as 'best practice,' eh?
 - Cannot properly sync connection stats. Qt replies nothing to my GET 127.0.0.1:9809; yet it is possible to retrieve stats with `curl`.
+- I used Free Desktop icons. So the toolbar would only display correctly on Linux.
