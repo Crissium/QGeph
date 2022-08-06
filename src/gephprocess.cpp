@@ -7,7 +7,6 @@ QString GephProcess::BinaryPath;
 
 GephProcess::GephProcess()
 {
-	setProgram(BinaryPath);
 }
 
 void GephProcess::establishConnection(const ConnectArgs & options)
@@ -35,12 +34,14 @@ void GephProcess::establishConnection(const ConnectArgs & options)
 	if (!options.logFilePath.isEmpty())
 		args << "--log-file" << options.logFilePath;
 
+	setProgram(BinaryPath);
 	setArguments(args);
 	start();
 }
 
 SyncedInfo GephProcess::sync(const SyncArgs & options)
 {
+	setProgram(BinaryPath);
 	setArguments(QStringList() << "--username" << options.username << "--password" << options.password);
 	setReadChannel(QProcess::StandardOutput);
 

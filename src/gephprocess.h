@@ -3,7 +3,6 @@
 
 #include <QProcess>
 #include <QDateTime>
-#include <vector>
 
 struct ConnectArgs
 {
@@ -27,17 +26,11 @@ struct SyncArgs
 	QString password;
 };
 
-class ServersInfo : public std::vector<QString>
-{
-public:
-	ServersInfo() {}
-};
-
 struct SyncedInfo
 {
 	QString plan;
 	QDateTime expirationTime;
-	ServersInfo servers;
+	QStringList servers;
 };
 
 class GephProcess : public QProcess
