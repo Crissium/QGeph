@@ -6,16 +6,16 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <cstdlib>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
 	, connectionInfoLabel(this)
-	, manager(this)
+	, manager(new QNetworkAccessManager(this))
+	, reply(nullptr)
 	, timer(this)
 {
 	ui->setupUi(this);
@@ -151,13 +151,18 @@ void MainWindow::syncInfo()
 
 void MainWindow::syncStats()
 {
-	manager.get(QNetworkRequest(QUrl("http://127.0.0.1:9809")));
-	connect(&manager, &QNetworkAccessManager::finished, this, [this] (QNetworkReply * reply)
+	reply = manager->get(QNetworkRequest(QUrl("http://127.0.0.1:9809")));
+	connect(reply, &QNetworkReply::readyRead, this, [this] ()
 	{
 		auto const doc = QJsonDocument::fromJson(reply->readAll());
 
 		connectionInfoLabel.setText(QString("%1ms %2%").arg(doc.object().value("latency").toDouble())
 									.arg(doc.object().value("loss").toDouble() * 100.));
+	});
+	connect(reply, &QNetworkReply::errorOccurred, this, [this] (QNetworkReply::NetworkError code)
+	{
+		Q_UNUSED(code);
+		qDebug() << reply->errorString();
 	});
 }
 

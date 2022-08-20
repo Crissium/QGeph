@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
 #include <QLabel>
 #include <QTimer>
 #include "toolbar.h"
@@ -26,7 +27,8 @@ protected:
 private:
 	Ui::MainWindow *ui;
 	QLabel connectionInfoLabel;
-	QNetworkAccessManager manager;
+	QNetworkAccessManager * manager;
+	QNetworkReply * reply;
 	QTimer timer;
 
 	GephProcess geph;
