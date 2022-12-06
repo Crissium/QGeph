@@ -1,3 +1,5 @@
+# Don't use. Broken after upgrading geph4. Won't maintain until I have time. Maybe in 2025 after I graduate.
+
 # Description
 
 This is a simple Qt6-based third-party Geph GUI and is not bundled with Geph executables. You need download or compile `geph4-client` separately and specify its path.
